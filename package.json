@@ -1,0 +1,27 @@
+{
+  "name": "jt-abcservitodo",
+  "version": "1.0.0",
+  "description": "Plantilla Oficial de WordPress para ABCServiTodo, usando Gulp y Sass",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jcarlosj/WordPress-Theme-JT-ABCServitodo.git"
+  },
+  "keywords": [
+    "sass",
+    "gulp"
+  ],
+  "author": "Juan Carlos Jiménez Gutiérrez <jcjimenez29@misena.edu.co> (https://twitter.com/Jce_)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jcarlosj/WordPress-Theme-JT-ABCServitodo/issues"
+  },
+  "homepage": "https://github.com/jcarlosj/WordPress-Theme-JT-ABCServitodo#readme",
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-notify": "^3.2.0"
+  }
+}
