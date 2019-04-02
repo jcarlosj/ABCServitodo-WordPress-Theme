@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/jcarlosj/WordPress-Theme-JT-ABCServitodo#readme",
   "devDependencies": {
+    "@cedx/gulp-php-minify": "^9.1.1",
     "gulp": "^4.0.0",
     "gulp-notify": "^3.2.0"
   }
