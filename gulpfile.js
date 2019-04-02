@@ -1,6 +1,7 @@
 const gulp = require( 'gulp' ),
       notify = require( 'gulp-notify' ),
-      {phpMinify} = require( '@cedx/gulp-php-minify' );
+      {phpMinify} = require( '@cedx/gulp-php-minify' ),
+      del = require( 'del' );
 
 // Variables
 const PATHS = {
@@ -24,6 +25,24 @@ function hello() {
     return gulp .src( './' )
                 .pipe( notify( 'Hello Gulp It\'s Works!' ) );
 }
+
+/* Elimina archivos generados */
+function remove( done ) {
+    del .sync([
+            './*.php',
+            './classes/*.php',
+            './classes/',
+            './inc/*.php',
+            './inc/',
+            './template-parts/**/*.php',
+            './template-parts/*.php',
+            './template-parts/',
+            '!./index.php'
+        ]);
+        console .log( 'Elimino archivos PHP generados!' );
+    done();
+}
+
 
 /* Minifica archivos de PHP */
 function compress_php( done ) {
@@ -65,3 +84,4 @@ function compress_php( done ) {
 
 exports .greet = hello;
 exports .minify = gulp .parallel( compress_php );
+exports .del = gulp .series( remove );
