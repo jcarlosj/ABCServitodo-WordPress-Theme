@@ -1,3 +1,4 @@
+
 const gulp = require( 'gulp' ),
       notify = require( 'gulp-notify' ),
       {phpMinify} = require( '@cedx/gulp-php-minify' ),
@@ -80,7 +81,9 @@ function hello() {
 // Tarea: Live Server
 function server() {
     const files = [
-      WORDPRESS .php_files
+      WORDPRESS .php_files,
+      PATHS .styles .min,
+      PATHS .images .src
     ];
 
     browsersync .init( files, {
@@ -90,8 +93,7 @@ function server() {
         watchEvents: [ 'change', 'add', 'unlink', 'addDir', 'unlinkDir' ]
     });
 
-    gulp .watch( WORDPRESS .php_files, reload );
-    gulp .watch( WORDPRESS .php_files ) .on( 'change', reload );
+    watch_files();
 }
 /* Reload */
 const reload = () => {
@@ -195,9 +197,15 @@ function compress_scss() {
     .pipe( gulp .dest( PATHS .styles .dest ) )
     .pipe( notify( 'Genera archivos CSS minificados' ) );;
 }
+/* Define archivos a los que se les hace seguimiento */
+function watch_files() {
+  gulp .watch( WORDPRESS .php_files, gulp .series( compress_php ) ) ;
+  gulp .watch( PATHS .styles .src, gulp .series( compress_scss ) ) ;
+  gulp .watch( PATHS .images .src, gulp .series( compress_images ) ) .on( 'change', browsersync .reload );
+}
 
 exports .greet = hello;
-exports .minify = gulp .parallel( compress_php, wpot );
+exports .minify = gulp .parallel( compress_images, compress_scss, compress_php );
 exports .del = gulp .series( remove );
 exports .wpot = gulp .series( wpot );
 exports .minphp = gulp .series( compress_php );
