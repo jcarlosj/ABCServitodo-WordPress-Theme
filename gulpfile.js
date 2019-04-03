@@ -4,7 +4,11 @@ const gulp = require( 'gulp' ),
       del = require( 'del' ),
       browsersync = require( 'browser-sync' ) .create(),
       wppot = require( 'gulp-wp-pot' ),
-      imagemin = require( 'gulp-imagemin' );
+      imagemin = require( 'gulp-imagemin' ),
+      sass = require( 'gulp-sass' ),
+      autoprefixer = require( 'gulp-autoprefixer' ),
+      sourcemaps = require( 'gulp-sourcemaps' ),
+      rename = require( 'gulp-rename' );
 
 /* Variables */
 // Config WordPress
@@ -23,6 +27,14 @@ const WORDPRESS = {
 };
 // Rutas
 const PATHS = {
+    styles: {
+        src  : [
+          './src/assets/scss/*.scss',
+          './src/assets/scss/**/*.scss'
+        ],
+        dest : './dist/assets/css/',
+        min  : './dist/assets/css/*.min.css'
+    },
     scripts: {
         php: {
             dir: [      // Directorios
@@ -46,6 +58,20 @@ const PATHS = {
         dest: './dist/assets/images/'
     }
 };
+// Browsers
+const BROWSERS = [
+    'last 2 version',
+    '> 1%',
+    'ie >= 9',
+    'ie_mob >= 10',
+    'ff >= 30',
+    'chrome >= 34',
+    'safari >= 7',
+    'opera >= 23',
+    'ios >= 7',
+    'android >= 4',
+    'bb >= 10'
+];
 
 function hello() {
     return gulp .src( './' )
@@ -158,10 +184,23 @@ function compress_images() {
         }))
         .pipe( gulp .dest( PATHS .images .dest ) );
 }
+// Tarea: Convierte archivos Sass to CSS Minificado
+function compress_scss() {
+  return gulp .src( PATHS .styles .src )
+    .pipe( sass( { outputStyle: 'expanded' } ) .on( 'error', sass .logError ) )
+    .pipe( sourcemaps .init() )
+    .pipe( autoprefixer( { browsers: BROWSERS } ) )
+    .pipe( rename( { suffix: '.min' } ) )
+    .pipe( sourcemaps .write( './' ) )
+    .pipe( gulp .dest( PATHS .styles .dest ) )
+    .pipe( notify( 'Genera archivos CSS minificados' ) );;
+}
 
 exports .greet = hello;
 exports .minify = gulp .parallel( compress_php, wpot );
 exports .del = gulp .series( remove );
 exports .wpot = gulp .series( wpot );
+exports .minphp = gulp .series( compress_php );
+exports .minscss = gulp .series( compress_scss );
 exports .minimages = gulp .series( compress_images );
 exports .default = gulp .parallel( server );
