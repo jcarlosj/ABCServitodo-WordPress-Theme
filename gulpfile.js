@@ -1,9 +1,25 @@
 const gulp = require( 'gulp' ),
       notify = require( 'gulp-notify' ),
       {phpMinify} = require( '@cedx/gulp-php-minify' ),
-      del = require( 'del' );
+      del = require( 'del' ),
+      browsersync = require( 'browser-sync' ) .create();
 
-// Variables
+/* Variables */
+// Config WordPress
+const WORDPRESS = {
+    php_files: [
+        './*.php',
+        './**/*.php',
+        './**/**/*.php'
+    ],
+    domain: {
+        localUrl: 'http://localhost/projects/abcservitodo.wp/',
+        textdomain: 'jt-abcservitodo',
+    },
+    admin : 'Juan Carlos Jiménez Gutiérrez <jcjimenez29@misena.edu.co>',
+    team  : 'Juan Carlos Jiménez Gutiérrez <jcjimenez29@misena.edu.co>'
+};
+// Rutas
 const PATHS = {
     scripts: {
         php: {
@@ -25,6 +41,27 @@ function hello() {
     return gulp .src( './' )
                 .pipe( notify( 'Hello Gulp It\'s Works!' ) );
 }
+// Tarea: Live Server
+function server() {
+    const files = [
+      WORDPRESS .php_files
+    ];
+
+    browsersync .init( files, {
+        proxy: WORDPRESS .domain .localUrl,
+        open: true,
+        injectChanges: true,
+        watchEvents: [ 'change', 'add', 'unlink', 'addDir', 'unlinkDir' ]
+    });
+
+    gulp .watch( WORDPRESS .php_files, reload );
+    gulp .watch( WORDPRESS .php_files ) .on( 'change', reload );
+}
+/* Reload */
+const reload = () => {
+    console .log( 'Recargando...' );
+    browsersync .reload;
+}
 
 /* Elimina archivos generados */
 function remove( done ) {
@@ -42,7 +79,6 @@ function remove( done ) {
         console .log( 'Elimino archivos PHP generados!' );
     done();
 }
-
 
 /* Minifica archivos de PHP */
 function compress_php( done ) {
@@ -85,3 +121,4 @@ function compress_php( done ) {
 exports .greet = hello;
 exports .minify = gulp .parallel( compress_php );
 exports .del = gulp .series( remove );
+exports .default = gulp .parallel( server );

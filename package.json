@@ -22,6 +22,7 @@
   "homepage": "https://github.com/jcarlosj/WordPress-Theme-JT-ABCServitodo#readme",
   "devDependencies": {
     "@cedx/gulp-php-minify": "^9.1.1",
+    "browser-sync": "^2.26.3",
     "del": "^4.1.0",
     "gulp": "^4.0.0",
     "gulp-notify": "^3.2.0"
