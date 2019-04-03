@@ -9,7 +9,11 @@ const gulp = require( 'gulp' ),
       sass = require( 'gulp-sass' ),
       autoprefixer = require( 'gulp-autoprefixer' ),
       sourcemaps = require( 'gulp-sourcemaps' ),
-      rename = require( 'gulp-rename' );
+      rename = require( 'gulp-rename' ),
+      babel = require( 'gulp-babel' ),
+      concat = require( 'gulp-concat' ),
+      stripdebug = require( 'gulp-strip-debug' ),
+      uglify = require( 'gulp-uglify' );
 
 /* Variables */
 // Config WordPress
@@ -48,7 +52,11 @@ const PATHS = {
                 './src/php/'
             ],
             dest: './'
-        }
+        },
+        js: {
+            src  : './src/assets/js/*.js',
+            dest : './dist/assets/js/'
+        },
     },
     images: {
         src: [
@@ -195,12 +203,28 @@ function compress_scss() {
     .pipe( rename( { suffix: '.min' } ) )
     .pipe( sourcemaps .write( './' ) )
     .pipe( gulp .dest( PATHS .styles .dest ) )
-    .pipe( notify( 'Genera archivos CSS minificados' ) );;
+    .pipe( notify( 'Genera archivos CSS minificados' ) );
 }
+// Task: Concatena y Minifica archivos JavaScript
+function compress_js() {
+    return gulp .src( PATHS .scripts .js .src, { sourcemaps: true } )
+        .pipe( babel({
+            presets: [ '@babel/env' ]
+        }))
+        .pipe( concat( 'build.js' ) )
+        .pipe( stripdebug() )
+        .pipe( gulp .dest( PATHS .scripts .js .dest, { sourcemaps: true } ) )
+        .pipe( uglify() )
+        .pipe( rename( { suffix: '.min' } ) )
+        .pipe( gulp .dest( PATHS .scripts .js .dest, { sourcemaps: true } ) )
+        .pipe( notify( 'Minifica archivos JavaScript' ) );
+}
+
 /* Define archivos a los que se les hace seguimiento */
 function watch_files() {
   gulp .watch( WORDPRESS .php_files, gulp .series( compress_php ) ) ;
   gulp .watch( PATHS .styles .src, gulp .series( compress_scss ) ) ;
+  gulp .watch( PATHS .scripts .js .src, gulp .series( compress_js ) ) ;
   gulp .watch( PATHS .images .src, gulp .series( compress_images ) ) .on( 'change', browsersync .reload );
 }
 
@@ -210,5 +234,6 @@ exports .del = gulp .series( remove );
 exports .wpot = gulp .series( wpot );
 exports .minphp = gulp .series( compress_php );
 exports .minscss = gulp .series( compress_scss );
+exports .minjs = gulp .series( compress_js );
 exports .minimages = gulp .series( compress_images );
 exports .default = gulp .parallel( server );

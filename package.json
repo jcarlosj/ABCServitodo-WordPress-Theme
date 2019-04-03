@@ -21,16 +21,22 @@
   },
   "homepage": "https://github.com/jcarlosj/WordPress-Theme-JT-ABCServitodo#readme",
   "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
     "@cedx/gulp-php-minify": "^9.1.1",
     "browser-sync": "^2.26.3",
     "del": "^4.1.0",
     "gulp": "^4.0.0",
     "gulp-autoprefixer": "^6.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-concat": "^2.6.1",
     "gulp-imagemin": "^5.0.3",
     "gulp-notify": "^3.2.0",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
+    "gulp-strip-debug": "^3.0.0",
+    "gulp-uglify": "^3.0.2",
     "gulp-wp-pot": "^2.3.4"
   }
 }
