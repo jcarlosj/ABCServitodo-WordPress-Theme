@@ -3,7 +3,8 @@ const gulp = require( 'gulp' ),
       {phpMinify} = require( '@cedx/gulp-php-minify' ),
       del = require( 'del' ),
       browsersync = require( 'browser-sync' ) .create(),
-      wppot = require( 'gulp-wp-pot' );
+      wppot = require( 'gulp-wp-pot' ),
+      imagemin = require( 'gulp-imagemin' );
 
 /* Variables */
 // Config WordPress
@@ -35,6 +36,14 @@ const PATHS = {
             ],
             dest: './'
         }
+    },
+    images: {
+        src: [
+          './src/assets/images/*.{jpg,jpeg,png,gif,svg}',
+          '!./src/assets/images/full-stack.jpeg',
+          '!./src/assets/images/productos/'
+        ],
+        dest: './dist/assets/images/'
     }
 };
 
@@ -131,9 +140,28 @@ function wpot() {
 		.pipe( gulp .dest( './languages/' + WORDPRESS .domain .textdomain + '.pot' ) )
         .pipe( notify( 'Genera archivo de traducción' ) );
 }
+// Tarea: Minifica imágenes
+function compress_images() {
+    return gulp .src( PATHS .images .src, { allowEmpty: true } )
+        .pipe( imagemin( [
+            imagemin .gifsicle({ interlaced: true }),
+            imagemin .jpegtran({ progressive: true }),
+            imagemin .optipng({ optimizationLevel: 10 }),
+            imagemin .svgo({
+                plugins: [
+                    { removeViewBox: true },
+                    { cleanupIDs: false }
+                ]
+            })  /* end - svgo */
+        ], {
+            verbose: true
+        }))
+        .pipe( gulp .dest( PATHS .images .dest ) );
+}
 
 exports .greet = hello;
 exports .minify = gulp .parallel( compress_php, wpot );
 exports .del = gulp .series( remove );
 exports .wpot = gulp .series( wpot );
+exports .minimages = gulp .series( compress_images );
 exports .default = gulp .parallel( server );
