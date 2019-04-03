@@ -2,7 +2,8 @@ const gulp = require( 'gulp' ),
       notify = require( 'gulp-notify' ),
       {phpMinify} = require( '@cedx/gulp-php-minify' ),
       del = require( 'del' ),
-      browsersync = require( 'browser-sync' ) .create();
+      browsersync = require( 'browser-sync' ) .create(),
+      wppot = require( 'gulp-wp-pot' );
 
 /* Variables */
 // Config WordPress
@@ -118,7 +119,21 @@ function compress_php( done ) {
     done();
 }
 
+// Tarea: Genera archivo de traducción
+function wpot() {
+	return gulp .src( './**/*.php' )
+		.pipe( wppot( {
+				domain: WORDPRESS .domain .textdomain,
+				lastTranslator: WORDPRESS .admin,
+				team: WORDPRESS .team
+			})
+		)
+		.pipe( gulp .dest( './languages/' + WORDPRESS .domain .textdomain + '.pot' ) )
+        .pipe( notify( 'Genera archivo de traducción' ) );
+}
+
 exports .greet = hello;
-exports .minify = gulp .parallel( compress_php );
+exports .minify = gulp .parallel( compress_php, wpot );
 exports .del = gulp .series( remove );
+exports .wpot = gulp .series( wpot );
 exports .default = gulp .parallel( server );

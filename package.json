@@ -25,6 +25,7 @@
     "browser-sync": "^2.26.3",
     "del": "^4.1.0",
     "gulp": "^4.0.0",
-    "gulp-notify": "^3.2.0"
+    "gulp-notify": "^3.2.0",
+    "gulp-wp-pot": "^2.3.4"
   }
 }
