@@ -136,7 +136,16 @@ function remove( done ) {
             '!./search.php',
             '!./single.php'
         ]);
-        console .log( 'Elimino todos los archivos generados!' );
+        console .log( 'Eliminó todos los archivos generados!' );
+    done();
+}
+/* Elimina directorio node_moarchivos generadosdules */
+function remove_packages( done ) {
+    del .sync([
+        './node_modules/*.*',
+        './node_modules/'
+    ]);
+    console .log( 'Eliminó directorio "node_modules"!' );
     done();
 }
 
@@ -236,7 +245,7 @@ function compress_js() {
 
 /* Define archivos a los que se les hace seguimiento */
 function watch_files() {
-  gulp .watch( WORDPRESS .php_files, gulp .series( compress_php ) ) ;
+  //gulp .watch( WORDPRESS .php_files, gulp .series( compress_php ) ) ;
   gulp .watch( PATHS .styles .src, gulp .series( compress_scss ) ) ;
   gulp .watch( PATHS .scripts .js .src, gulp .series( compress_js ) ) ;
   gulp .watch( PATHS .images .src, gulp .series( compress_images ) ) .on( 'change', browsersync .reload );
@@ -245,6 +254,7 @@ function watch_files() {
 exports .greet = hello;
 exports .minify = gulp .parallel( compress_images, compress_scss );
 exports .del = gulp .series( remove );
+exports .delpackages = gulp .series( remove_packages );
 exports .wpot = gulp .series( wpot );
 // exports .minphp = gulp .series( compress_php );
 exports .minscss = gulp .series( compress_scss );
