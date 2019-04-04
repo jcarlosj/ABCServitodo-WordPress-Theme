@@ -112,17 +112,31 @@ const reload = () => {
 /* Elimina archivos generados */
 function remove( done ) {
     del .sync([
+            './dist/*.*',
+            './dist/',
+            './languages/*.*',
+            './languages/',
             './*.php',
-            './classes/*.php',
-            './classes/',
-            './inc/*.php',
-            './inc/',
-            './template-parts/**/*.php',
-            './template-parts/*.php',
-            './template-parts/',
-            '!./index.php'
+            '!./classes/*.php',
+            '!./classes/',
+            '!./inc/*.php',
+            '!./inc/',
+            '!./template-parts/**/*.php',
+            '!./template-parts/*.php',
+            '!./template-parts/',
+            '!./404.php',
+            '!./archive.php',
+            '!./comments.php',
+            '!./footer.php',
+            '!./functions.php',
+            '!./header.php',
+            '!./image.php',
+            '!./index.php',
+            '!./page.php',
+            '!./search.php',
+            '!./single.php'
         ]);
-        console .log( 'Elimino archivos PHP generados!' );
+        console .log( 'Elimino todos los archivos generados!' );
     done();
 }
 
@@ -229,10 +243,10 @@ function watch_files() {
 }
 
 exports .greet = hello;
-exports .minify = gulp .parallel( compress_images, compress_scss, compress_php );
+exports .minify = gulp .parallel( compress_images, compress_scss );
 exports .del = gulp .series( remove );
 exports .wpot = gulp .series( wpot );
-exports .minphp = gulp .series( compress_php );
+// exports .minphp = gulp .series( compress_php );
 exports .minscss = gulp .series( compress_scss );
 exports .minjs = gulp .series( compress_js );
 exports .minimages = gulp .series( compress_images );
