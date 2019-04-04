@@ -251,8 +251,9 @@ function watch_files() {
   gulp .watch( PATHS .images .src, gulp .series( compress_images ) ) .on( 'change', browsersync .reload );
 }
 
+// Exports
 exports .greet = hello;
-exports .minify = gulp .parallel( compress_images, compress_scss );
+exports .minify = gulp .parallel( compress_images, compress_js, compress_scss );
 exports .del = gulp .series( remove );
 exports .delpackages = gulp .series( remove_packages );
 exports .wpot = gulp .series( wpot );
@@ -260,4 +261,8 @@ exports .wpot = gulp .series( wpot );
 exports .minscss = gulp .series( compress_scss );
 exports .minjs = gulp .series( compress_js );
 exports .minimages = gulp .series( compress_images );
-exports .default = gulp .parallel( server );
+
+exports .default = gulp .series(
+    gulp .parallel( compress_images, compress_js, compress_scss ),
+    gulp .series( wpot, server )
+);
