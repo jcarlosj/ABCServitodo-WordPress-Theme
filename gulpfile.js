@@ -1,5 +1,5 @@
 
-const gulp = require( 'gulp' ),
+const { src, dest, watch, series, parallel } = require( 'gulp' ),
       notify = require( 'gulp-notify' ),
       {phpMinify} = require( '@cedx/gulp-php-minify' ),
       del = require( 'del' ),
@@ -83,7 +83,7 @@ const BROWSERS = [
 ];
 
 function hello() {
-    return gulp .src( './' )
+    return src( './' )
                 .pipe( notify( 'Hello Gulp It\'s Works!' ) );
 }
 // Tarea: Live Server
@@ -102,11 +102,6 @@ function server() {
     });
 
     watch_files();
-}
-/* Reload */
-const reload = () => {
-    console .log( 'Recargando...' );
-    browsersync .reload;
 }
 
 /* Elimina archivos generados */
@@ -168,15 +163,9 @@ function compress_php( done ) {
 
     // Tarea: Ejecuta la tarea de minificación de archivos PHP
     function compress( path ) {
-        return gulp .src( PATHS .scripts .php .src + get_path( path ), { read: true } )
+        return src( PATHS .scripts .php .src + get_path( path ), { read: true } )
              .pipe( phpMinify() )
-             .pipe( gulp .dest( PATHS .scripts .php .dest + path ) )
-             .pipe( notify( {
-                 message: "Genera archivo: <%= file.relative %> @ <%= options.date %>",
-                 templateOptions: {
-                    date: new Date()
-                 }
-             }));
+             .pipe( dest( PATHS .scripts .php .dest + path ) );
     }
 
     // Intera las rutas donde se encuentran los archivos PHP
@@ -189,19 +178,18 @@ function compress_php( done ) {
 
 // Tarea: Genera archivo de traducción
 function wpot() {
-	return gulp .src( './**/*.php' )
+	return src( './**/*.php' )
 		.pipe( wppot( {
 				domain: WORDPRESS .domain .textdomain,
 				lastTranslator: WORDPRESS .admin,
 				team: WORDPRESS .team
 			})
 		)
-		.pipe( gulp .dest( './languages/' + WORDPRESS .domain .textdomain + '.pot' ) )
-        .pipe( notify( 'Genera archivo de traducción' ) );
+		.pipe( dest( './languages/' + WORDPRESS .domain .textdomain + '.pot' ) );
 }
 // Tarea: Minifica imágenes
 function compress_images() {
-    return gulp .src( PATHS .images .src, { allowEmpty: true } )
+    return src( PATHS .images .src, { allowEmpty: true } )
         .pipe( imagemin( [
             imagemin .gifsicle({ interlaced: true }),
             imagemin .jpegtran({ progressive: true }),
@@ -215,54 +203,51 @@ function compress_images() {
         ], {
             verbose: true
         }))
-        .pipe( gulp .dest( PATHS .images .dest ) );
+        .pipe( dest( PATHS .images .dest ) );
 }
 // Tarea: Convierte archivos Sass to CSS Minificado
 function compress_scss() {
-  return gulp .src( PATHS .styles .src )
+  return src( PATHS .styles .src )
     .pipe( sass( { outputStyle: 'expanded' } ) .on( 'error', sass .logError ) )
     .pipe( sourcemaps .init() )
     .pipe( autoprefixer( { browsers: BROWSERS } ) )
     .pipe( rename( { suffix: '.min' } ) )
     .pipe( sourcemaps .write( './' ) )
-    .pipe( gulp .dest( PATHS .styles .dest ) )
-    .pipe( notify( 'Genera archivos CSS minificados' ) );
+    .pipe( dest( PATHS .styles .dest ) );
 }
 // Task: Concatena y Minifica archivos JavaScript
 function compress_js() {
-    return gulp .src( PATHS .scripts .js .src, { sourcemaps: true } )
+    return src( PATHS .scripts .js .src, { sourcemaps: true } )
         .pipe( babel({
             presets: [ '@babel/env' ]
         }))
         .pipe( concat( 'build.js' ) )
         .pipe( stripdebug() )
-        .pipe( gulp .dest( PATHS .scripts .js .dest, { sourcemaps: true } ) )
+        .pipe( dest( PATHS .scripts .js .dest, { sourcemaps: true } ) )
         .pipe( uglify() )
         .pipe( rename( { suffix: '.min' } ) )
-        .pipe( gulp .dest( PATHS .scripts .js .dest, { sourcemaps: true } ) )
-        .pipe( notify( 'Minifica archivos JavaScript' ) );
+        .pipe( dest( PATHS .scripts .js .dest, { sourcemaps: true } ) );
 }
 
 /* Define archivos a los que se les hace seguimiento */
 function watch_files() {
-  //gulp .watch( WORDPRESS .php_files, gulp .series( compress_php ) ) ;
-  gulp .watch( PATHS .styles .src, gulp .series( compress_scss ) ) ;
-  gulp .watch( PATHS .scripts .js .src, gulp .series( compress_js ) ) ;
-  gulp .watch( PATHS .images .src, gulp .series( compress_images ) ) .on( 'change', browsersync .reload );
+  //watch( WORDPRESS .php_files, series( compress_php ) ) ;
+  watch( [ './*.php', './**/*.php' ], browsersync .reload );
+  watch( './style.css', browsersync .reload );
+  watch( PATHS .styles .src, series( compress_scss ), browsersync .reload );
+  watch( PATHS .scripts .js .src, series( compress_js ) );
+  watch( PATHS .images .src, series( compress_images ) ) .on( 'change', browsersync .reload );
 }
 
-// Exports
-exports .greet = hello;
-exports .minify = gulp .parallel( compress_images, compress_js, compress_scss );
-exports .del = gulp .series( remove );
-exports .delpackages = gulp .series( remove_packages );
-exports .wpot = gulp .series( wpot );
-// exports .minphp = gulp .series( compress_php );
-exports .minscss = gulp .series( compress_scss );
-exports .minjs = gulp .series( compress_js );
-exports .minimages = gulp .series( compress_images );
+// exports .minphp = series( compress_php );
 
-exports .default = gulp .series(
-    gulp .parallel( compress_images, compress_js, compress_scss ),
-    gulp .series( wpot, server )
-);
+// Exports
+module .exports = {
+    default: series(
+        parallel( compress_images, compress_js, compress_scss ),
+        series( wpot, server )
+    ),
+    delpackages: series( remove_packages ),
+    del: series( remove ),
+    hello
+}
