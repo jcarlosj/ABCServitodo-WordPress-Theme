@@ -21,39 +21,8 @@
 
 <body <?php body_class(); ?>>
 <div id="page" class="site layout-theme">
-	<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'jtabcservitodo' ); ?></a>
-
-		<header id="masthead" class="<?php echo is_singular() && jtabcservitodo_can_show_post_thumbnail() ? 'site-header featured-image' : 'site-header'; ?>">
-
-
-
-
-
-
-
-
-			<div class="site-branding-container">
-				<?php get_template_part( 'template-parts/header/site', 'branding' ); ?>
-			</div><!-- .layout-wrap -->
-
-			<?php if ( is_singular() && jtabcservitodo_can_show_post_thumbnail() ) : ?>
-				<div class="site-featured-image">
-					<?php
-						jtabcservitodo_post_thumbnail();
-						the_post();
-						$discussion = ! is_page() && jtabcservitodo_can_show_post_thumbnail() ? jtabcservitodo_get_discussion_data() : null;
-
-						$classes = 'entry-header';
-					if ( ! empty( $discussion ) && absint( $discussion->responses ) > 0 ) {
-						$classes = 'entry-header has-discussion';
-					}
-					?>
-					<div class="<?php echo $classes; ?>">
-						<?php get_template_part( 'template-parts/header/entry', 'header' ); ?>
-					</div><!-- .entry-header -->
-					<?php rewind_posts(); ?>
-				</div>
-			<?php endif; ?>
-		</header><!-- #masthead -->
+	<header id="masthead" class="<?php echo is_singular() && jtabcservitodo_can_show_post_thumbnail() ? 'site-header featured-image' : 'site-header'; ?>">
+		<h2>Header</h2>
+	</header><!-- #masthead -->
 
 	<div id="content" class="site-content">
