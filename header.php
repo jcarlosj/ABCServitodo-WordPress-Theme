@@ -22,29 +22,12 @@
 <body <?php body_class(); ?>>
 <div id="page" class="site layout-theme">
 	<header id="masthead" class="<?php echo is_singular() && jtabcservitodo_can_show_post_thumbnail() ? 'site-header featured-image' : 'site-header'; ?>">
-		<section class="site-header-top">
-			<div class="space"></div>
-			<div class="content">
-				<h3>Header Top</h3>
-			</div>
-			<div class="space"></div>
-		</section>
 
-		<section class="site-header-middle">	
-			<section class="site-header-middle-container">
-				<div class="site-header-middle-content">
-					<h3>Header Middle</h3>
-				</div>
-			</section>
-		</section>
-
-		<section class="site-header-bottom">	
-			<section class="site-header-bottom-container">
-				<div class="site-header-bottom-content">
-					<h3>Header Bottom</h3>
-				</div>
-			</section>
-		</section>
+		<?php 
+			get_template_part( 'template-parts/header/header', 'top' );
+			get_template_part( 'template-parts/header/header', 'middle' );
+			get_template_part( 'template-parts/header/header', 'bottom' );
+		?>
 
 	</header><!-- #masthead -->
 
