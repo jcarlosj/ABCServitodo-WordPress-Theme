@@ -1,0 +1,26 @@
+.site-header {
+    border-top: 6px solid #1e2126;
+
+    &-top {
+        display: flex;
+        justify-content: space-around;
+
+        .space {
+            flex-basis: auto;
+            flex-grow: 1;
+        }
+        .content {
+            flex-basis: 1265px;
+        }
+    }
+
+    &-middle,
+    &-bottom {
+    
+        &-container {
+            margin: 0 auto;
+            width: 1265px;    
+        }
+        &-content {}
+    }
+}

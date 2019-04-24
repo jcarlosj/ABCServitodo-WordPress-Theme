@@ -1,7 +1,5 @@
 body {
     background-color: blue;
-    border: 6px solid yellow;
-    box-sizing: border-box;
     color: white;
 }
 
@@ -14,6 +12,40 @@ body {
     &-footer {
         border: 2px solid white;
         box-sizing: border-box;
+    }
+
+    &-header {
+        &-top {
+    
+            .space {
+                border: 2px solid yellow; 
+            }
+            .content {
+                border: 2px solid black;
+            }
+        }
+        &-middle,
+        &-bottom {
+        
+            &-container {
+                border: 2px solid black;  
+            }
+            &-content {}
+        }
+    }
+
+    &-main {
+        &-container {
+            border: 2px solid black;  
+        }
+        &-content {}
+    }
+
+    &-footer {
+        &-container {
+            border: 2px solid black;   
+        }
+        &-content {}
     }
 
 }

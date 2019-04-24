@@ -15,8 +15,12 @@
 
 	</div><!-- #site-content -->
 
-	<footer id="colophon" class="site-footer">
-		<h2>Footer</h2>
+	<footer id="colophon" class="site-footer">	
+		<section class="site-footer-container">
+			<div class="site-footer-content">
+				<h2>Footer</h2>
+			</div>
+		</section>
 	</footer><!-- #colophon -->
 
 </div><!-- #page -->
