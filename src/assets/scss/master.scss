@@ -1,4 +1,23 @@
+/* >>> Tabla de contenidos 
+    # Temporales
+    # Variables
+    # Normalización
+    # Elementos
+        ## Listas
+    # Contenido
+*/
+
+/* Temporales */
 @import 'temporal';
 
+/* Variables */
+@import './variables/variables';
+
+/* Normalización */
 @import 'normalize';
+
+/* Elementos */
+@import './elements/elements';
+
+/* Contenido */
 @import './site/site';

@@ -56,7 +56,8 @@ if ( ! function_exists( 'jtabcservitodo_setup' ) ) :
 		// This theme uses wp_nav_menu() in two locations.
 		register_nav_menus(
 			array(
-				'menu-1' => __( 'Primary', 'jtabcservitodo' ),
+				'main'   => __( 'Primary', 'jtabcservitodo' ),
+				'secondary'   => __( 'Secondary', 'jtabcservitodo' ),
 				'footer' => __( 'Footer Menu', 'jtabcservitodo' ),
 				'social' => __( 'Social Links Menu', 'jtabcservitodo' ),
 			)

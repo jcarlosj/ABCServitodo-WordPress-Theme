@@ -1,7 +1,4 @@
-body {
-    background-color: blue;
-    color: white;
-}
+body {}
 
 .site {
     border: 4px solid orange;
@@ -18,7 +15,7 @@ body {
         &-top {
     
             .space {
-                border: 2px solid yellow; 
+                border: 2px solid green; 
             }
             .content {
                 border: 2px solid black;
