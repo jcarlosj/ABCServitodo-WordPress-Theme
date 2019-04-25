@@ -1,0 +1,13 @@
+.main-navbar {
+    display: flex;
+    justify-content: space-between;
+
+    .brand {
+
+    }   
+    .custom-info {
+        display: flex;
+
+        &-data {}
+    }
+}

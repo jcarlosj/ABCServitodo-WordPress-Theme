@@ -56,3 +56,19 @@ body {}
     }
 
 }
+
+.main-navbar {
+    background-color: pink;
+
+    nav {
+        border: 2px solid red;
+        box-sizing: border-box;
+    }
+
+    .custom-info {
+        &-data {
+            border: 2px solid orange;
+            box-sizing: border-box;
+        }
+    }
+}

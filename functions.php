@@ -87,7 +87,7 @@ if ( ! function_exists( 'jtabcservitodo_setup' ) ) :
 			'custom-logo',
 			array(
 				'height'      => 190,
-				'width'       => 190,
+				'width'       => 380,
 				'flex-width'  => false,
 				'flex-height' => false,
 			)
