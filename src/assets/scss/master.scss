@@ -9,6 +9,7 @@
         ## Enlaces
         ## Menues 
         ## Navegación   
+    # Layout    
     # Contenido
 */
 
@@ -29,6 +30,9 @@
 
 /* Navigación */
 @import "./navigation/navigation";
+
+/* Layout */
+@import "./layout/layout";
 
 /* Contenido */
 @import './site/site';

@@ -20,7 +20,7 @@
 </head>
 
 <body <?php body_class(); ?>>
-<div id="page" class="site layout-theme">
+<div id="page" class="site layout">
 	<header id="masthead" class="<?php echo is_singular() && jtabcservitodo_can_show_post_thumbnail() ? 'site-header featured-image' : 'site-header'; ?>">
 
 		<?php 

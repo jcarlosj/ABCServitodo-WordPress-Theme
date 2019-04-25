@@ -4,15 +4,15 @@
         <?php if ( has_nav_menu( 'secondary' ) ) : ?>
             <nav id="site-secondary-navigation" class="secondary-navigation" aria-label="<?php esc_attr_e( 'Top Menu', 'jtabcservitodo' ); ?>">
                 <?php
-                wp_nav_menu(
-                    array(
-                        'theme_location' => 'secondary',
-                        'menu_class'     => 'secondary-menu',
-                        'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-                    )
-                );
+                    wp_nav_menu(
+                        array(
+                            'theme_location' => 'secondary',
+                            'menu_class'     => 'secondary-menu',
+                            'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+                        )
+                    );
                 ?>
-            </nav><!-- #site-navigation -->
+            </nav><!-- #site-secondary-navigation -->
         <?php endif; ?>
         <?php if ( has_nav_menu( 'social' ) ) : ?>
             <nav class="social-navigation" aria-label="<?php esc_attr_e( 'Social Links Menu', 'jtabcservitodo' ); ?>">

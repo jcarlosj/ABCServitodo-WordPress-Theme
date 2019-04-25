@@ -25,6 +25,13 @@
         }
         &-content {}
     }
+
+    &-bottom {
+        &-content {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
 }
 
 @import 'header-top';

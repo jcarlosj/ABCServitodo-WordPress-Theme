@@ -7,7 +7,7 @@ body {}
     &-header,
     &-content,
     &-footer {
-        border: 2px solid white;
+        border: 2px dotted red;
         box-sizing: border-box;
     }
 
@@ -36,6 +36,15 @@ body {}
                 box-sizing: border-box;
             }
             &-content {}
+        }
+
+        &-bottom {            
+            &-content {
+                nav {
+                    border: 2px solid red;  
+                    box-sizing: border-box;
+                }
+            }
         }
     }
 
