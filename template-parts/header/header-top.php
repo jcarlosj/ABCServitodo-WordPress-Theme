@@ -1,6 +1,6 @@
 <section class="site-header-top">
-    <div class="space"></div>
-    <div class="content">
+    <div class="site-header-top-space"></div>
+    <div class="site-header-top-content">
         <?php if ( has_nav_menu( 'secondary' ) ) : ?>
             <nav id="site-secondary-navigation" class="secondary-navigation" aria-label="<?php esc_attr_e( 'Top Menu', 'jtabcservitodo' ); ?>">
                 <?php
@@ -30,5 +30,5 @@
             </nav><!-- .social-navigation -->
         <?php endif; ?>
     </div>
-    <div class="space"></div>
+    <div class="site-header-top-space"></div>
 </section>

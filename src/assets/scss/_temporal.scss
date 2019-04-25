@@ -14,11 +14,18 @@ body {}
     &-header {
         &-top {
     
-            .space {
+            &-space {
                 border: 2px solid green; 
+                box-sizing: border-box;
             }
-            .content {
+            &-content {
                 border: 2px solid black;
+                box-sizing: border-box;
+
+                nav {
+                    border: 2px solid red;
+                    box-sizing: border-box;
+                }
             }
         }
         &-middle,
@@ -26,6 +33,7 @@ body {}
         
             &-container {
                 border: 2px solid black;  
+                box-sizing: border-box;
             }
             &-content {}
         }
@@ -34,13 +42,15 @@ body {}
     &-main {
         &-container {
             border: 2px solid black;  
+            box-sizing: border-box;
         }
         &-content {}
     }
 
     &-footer {
         &-container {
-            border: 2px solid black;   
+            border: 2px solid black;
+            box-sizing: border-box;   
         }
         &-content {}
     }

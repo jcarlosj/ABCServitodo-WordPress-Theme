@@ -1,9 +1,12 @@
 /* >>> Tabla de contenidos 
     # Temporales
     # Variables
+    # Mixins
     # Normalización
     # Elementos
         ## Listas
+    # Navegación
+	    ## Enlaces    
     # Contenido
 */
 
@@ -13,11 +16,18 @@
 /* Variables */
 @import './variables/variables';
 
+/* Mixins */
+@import './mixins/mixins';
+
 /* Normalización */
 @import 'normalize';
 
 /* Elementos */
 @import './elements/elements';
+
+/* Navigación */
+
+@import "./navigation/navigation";
 
 /* Contenido */
 @import './site/site';

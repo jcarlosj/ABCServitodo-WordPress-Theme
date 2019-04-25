@@ -5,12 +5,14 @@
         display: flex;
         justify-content: space-around;
 
-        .space {
+        &-space {
             flex-basis: auto;
             flex-grow: 1;
         }
-        .content {
+        &-content {
+            display: flex;
             flex-basis: 1265px;
+            justify-content: flex-end;
         }
     }
 
@@ -24,3 +26,5 @@
         &-content {}
     }
 }
+
+@import 'header-top';
